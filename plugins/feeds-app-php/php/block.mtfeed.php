@@ -7,7 +7,7 @@ function smarty_block_mtfeed ( $args, $content, &$ctx, &$repeat ) {
         $to_encoding or $to_encoding = 'UTF-8';
         $ctx->stash( 'to_encoding', $to_encoding );
         $url = $args[ 'uri' ];
-        $no_cache = $ctx->mt->config( 'FeedNoCache' );
+        $no_cache = $args[ 'no_cache' ];
         $xml_object = NULL;
         if ( $no_cache ) {
             $xml_object = simplexml_load_file( $url );
@@ -16,7 +16,7 @@ function smarty_block_mtfeed ( $args, $content, &$ctx, &$repeat ) {
                          DIRECTORY_SEPARATOR . 'cache';
             $cache_basename = md5( $url );
             $cache_file = $cache_dir . DIRECTORY_SEPARATOR . $cache_basename;
-            $expiration = $ctx->mt->config( 'FeedCacheExpiration' );
+            $expiration = $args[ 'expiration' ];
             if (! $expiration ) $expiration = 86400;
             $use_cache = 0;
             if ( file_exists( $cache_file ) ) {
